@@ -40,7 +40,7 @@
 
     button {
       font-size: 20px;
-      padding: 12px 24px;
+      padding: 24px 24px;
       margin: 10px;
     }
 
@@ -139,6 +139,7 @@
     }
 
     .line-toggle-buttons,
+    .mode-buttons,
     .question-count-buttons {
       display: flex;
       justify-content: center;
@@ -154,7 +155,7 @@
       margin: 0;
     }
 
-        .autoplay-setting {
+    .mode-setting {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -165,47 +166,37 @@
       color: #003057;
     }
 
-    .autoplay-switch {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      width: 72px;
-      height: 38px;
-      cursor: pointer;
-    }
-
-    .autoplay-switch input {
+    .mode-buttons input {
       display: none;
     }
 
-    .autoplay-slider {
-      position: absolute;
-      inset: 0;
+    .mode-buttons span {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 18px 20px;
       border-radius: 999px;
-      background: rgba(120,120,120,0.55);
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.18);
-      transition: background 0.2s ease;
+      border: 1px solid rgba(0, 48, 87, 0.25);
+      background: rgba(255,255,255,0.82);
+      color: #003057;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
-    .autoplay-slider::before {
-      content: "";
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      left: 4px;
-      top: 4px;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.24);
-      transition: transform 0.2s ease;
+    .mode-buttons span:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
-    .autoplay-switch input:checked + .autoplay-slider {
+    .mode-buttons input:checked + span {
       background: #00B982;
-    }
-
-    .autoplay-switch input:checked + .autoplay-slider::before {
-      transform: translateX(34px);
+      border-color: rgba(0,185,130,0.45);
+      color: white;
     }
 
     .line-toggle-buttons button,
@@ -214,7 +205,7 @@
     #result button {
       font-size: 16px;
       font-weight: bold;
-      padding: 9px 20px;
+      padding: 18px 20px;
       margin: 0;
       border-radius: 999px;
       border: 1px solid rgba(0, 48, 87, 0.25);
@@ -245,7 +236,7 @@
 
     .question-count-buttons button {
       font-size: 20px;
-      padding: 12px 28px;
+      padding: 24px 28px;
       min-width: 92px;
     }
 
@@ -254,7 +245,7 @@
     #answerButtons button,
     #result button {
       font-size: 20px;
-      padding: 12px 28px;
+      padding: 24px 28px;
       min-width: 100px;
     }
 
@@ -426,6 +417,26 @@
       color: white;
     }
 
+    #quiz #correctBtn {
+      color: #4caf50;
+    }
+
+    #quiz #wrongBtn {
+      color: #f44336;
+    }
+
+    #quiz #correctBtn.selected-correct {
+      background: #4caf50;
+      border-color: rgba(76, 175, 80, 0.45);
+      color: white;
+    }
+
+    #quiz #wrongBtn.selected-wrong {
+      background: #f44336;
+      border-color: rgba(244, 67, 54, 0.45);
+      color: white;
+    }
+
     button:disabled {
       opacity: 1;
       cursor: default;
@@ -463,6 +474,17 @@
       min-width: 280px;
     }
 
+    #score.plain-result {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      min-width: 0;
+    }
+
+    #score.plain-result .score-detail {
+      margin-bottom: 0;
+    }
+
     #result button {
       display: block;
       margin: 40px auto 20px auto;
@@ -487,8 +509,279 @@
     }
 
     .f-code {
-      color: #9c5e2c; /* 副都心線 */
+      color: hsl(27, 56%, 39%); /* 副都心線 */
     }
+
+    /* ======================================
+      スマホ表示（768px以下）
+    ====================================== */
+    @media (max-width:768px){
+
+      body{
+        padding:18px 12px;
+      }
+
+      /* ---------- タイトル ---------- */
+
+      h1{
+        font-size:30px;
+        line-height:1.3;
+        margin-bottom:10px;
+      }
+
+      h2{
+        font-size:22px;
+        margin-bottom:18px;
+      }
+
+      /* ---------- 路線選択 ---------- */
+
+      .line-options{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:16px;
+        justify-items:center;
+        margin:20px 0;
+      }
+
+      .line-card{
+        width:90px;
+        height:90px;
+
+        transform:scale(1);
+        opacity:0.8;
+      }
+
+      .line-card:has(input:checked){
+        transform:scale(1.08);
+        opacity:1;
+      }
+
+      .line-card img{
+        width:64px;
+        height:64px;
+      }
+
+      /* ---------- 全選択 ---------- */
+
+      .line-toggle-buttons{
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
+        margin-bottom:26px;
+      }
+
+      .line-toggle-buttons button{
+        width:90%;
+        max-width:320px;
+
+        font-size:20px;
+        padding:28px 14px;
+      }
+
+      /* ---------- モード選択 ---------- */
+
+      .mode-setting{
+        display:block;
+        font-size:22px;
+        margin-bottom:26px;
+      }
+
+      .mode-setting > span{
+        display:block;
+        margin-bottom:12px;
+      }
+
+      .mode-buttons{
+        width:100%;
+        max-width:360px;
+        margin:0 auto;
+      }
+
+      .mode-buttons label{
+        flex:1;
+      }
+
+      .mode-buttons span{
+        width:100%;
+        box-sizing:border-box;
+      }
+
+      /* ---------- 出題数 ---------- */
+
+      .question-count-buttons{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:14px;
+        width:100%;
+        max-width:360px;
+        margin:0 auto;
+      }
+
+      .question-count-buttons button{
+        width:100%;
+        margin:0;
+
+        font-size:24px;
+        padding:36px 18px;
+      }
+
+      /* ---------- クイズ画面 ---------- */
+
+      #progress{
+        font-size:24px;
+      }
+
+      #showAnswerBtn{
+        width:92%;
+        max-width:360px;
+
+        font-size:28px;
+        padding:36px 18px;
+      }
+
+      /* ---------- 解答 ---------- */
+
+      .answer{
+        display:block;
+        width:100%;
+        box-sizing:border-box;
+
+        margin-top:24px;
+        padding:22px;
+      }
+
+      .answer-title{
+        font-size:28px;
+      }
+
+      .answer small{
+        font-size:20px;
+      }
+
+      /* ---------- 正解・不正解 ---------- */
+
+      #judgeButtons{
+        flex-direction:row;
+        justify-content:center;
+        gap:12px;
+        margin-top:20px;
+      }
+
+      #judgeButtons button{
+        width:44%;
+        max-width:150px;
+
+        font-size:20px;
+        padding:28px 14px;
+
+        color:#fff;
+        border:none;
+      }
+
+      #quiz #correctBtn{
+          background:rgba(255,255,255,0.82);
+          color:#4CAF50;
+      }
+
+      #quiz #wrongBtn{
+          background:rgba(255,255,255,0.82);
+          color:#F44336;
+      }
+
+      /* ---------- 再生・次へ・終了 ---------- */
+
+      #answerButtons{
+        flex-direction:column;
+        align-items:center;
+        gap:14px;
+        margin-top:24px;
+      }
+
+      /* 再生 */
+
+      #playBtn{
+        width:72%;
+        max-width:260px;
+
+        font-size:20px;
+        padding:28px 14px;
+      }
+
+      /* 次へ（主役） */
+
+      #nextBtn{
+
+        width:95%;
+        max-width:360px;
+
+        font-size:30px;
+        font-weight:bold;
+
+        padding:44px 22px;
+
+        background:#00B982;
+        color:#fff;
+
+        border:none;
+
+        box-shadow:0 8px 20px rgba(0,185,130,.35);
+      }
+
+      #nextBtn:hover{
+        transform:none;
+      }
+
+      /* 終了 */
+
+      #endBtn{
+
+        width:72%;
+        max-width:260px;
+
+        font-size:18px;
+        padding:28px 14px;
+
+        background:#888;
+        color:#fff;
+        border:none;
+      }
+
+      /* ---------- スコア ---------- */
+
+      #score{
+        width:100%;
+        min-width:0;
+        box-sizing:border-box;
+
+        padding:24px 18px;
+      }
+
+      .score-detail{
+        font-size:20px;
+      }
+
+      .score-point{
+        font-size:60px;
+      }
+
+      #result button{
+        width:92%;
+        max-width:360px;
+
+        font-size:24px;
+        padding:36px 18px;
+      }
+
+      /* ---------- 音源 ---------- */
+
+      #audioCredit{
+        position:static;
+        margin-top:36px;
+        font-size:12px;
+      }
+    }
+
   </style>
 
   <!-- Google tag (gtag.js) -->
@@ -617,12 +910,22 @@
       <button type="button" class="clear-all" onclick="setAllLines(false)">全解除</button>
     </div>
 
-    <div class="autoplay-setting">
-      <span>自動再生</span>
-      <label class="autoplay-switch">
-        <input type="checkbox" id="autoPlayToggle">
-        <span class="autoplay-slider"></span>
-      </label>
+    <div class="mode-setting">
+      <span>モード</span>
+      <div class="mode-buttons">
+        <label>
+          <input type="radio" name="quizMode" value="normal" checked>
+          <span>通常</span>
+        </label>
+        <label>
+          <input type="radio" name="quizMode" value="auto">
+          <span>オート</span>
+        </label>
+        <label>
+          <input type="radio" name="quizMode" value="scoring">
+          <span>採点</span>
+        </label>
+      </div>
     </div>
 
     <div class="question-count-buttons">
@@ -1025,8 +1328,8 @@
     { audio: "audio/8-南北線/840.mp3", title: "曲名不明", station: "南北線 乗降促進 B線", line: "南北線" },
 
     { audio: "audio/9-副都心線/901.mp3", title: "オン・ザ・コーナー", station: "F-07 千川 A線", line: "副都心線" },
-    { audio: "audio/9-副都心線/902.mp3", title: "City Runner", station: "F-08 要町 A線", line: "副都心線" },
-    { audio: "audio/9-副都心線/903.mp3", title: "TOKYO CITY", station: "F-09 池袋 A線", line: "副都心線" },
+    { audio: "audio/9-副都心線/902.mp3", title: "City Runner", station: "F-08 要町 1番線", line: "副都心線" },
+    { audio: "audio/9-副都心線/903.mp3", title: "TOKYO CITY", station: "F-09 池袋 2番線", line: "副都心線" },
     { audio: "audio/9-副都心線/904.mp3", title: "シーサイド", station: "F-10 雑司ヶ谷 A線", line: "副都心線" },
     { audio: "audio/9-副都心線/905.mp3", title: "クリストフ", station: "F-11 西早稲田 A線", line: "副都心線" },
     { audio: "audio/9-副都心線/906.mp3", title: "きらめくホーム", station: "F-12 東新宿 1番線", line: "副都心線" },
@@ -1082,7 +1385,7 @@
   let correctCount = 0;
   let answeredCount = 0;
   let answered = false;
-  let autoPlayEnabled = false;
+  let quizMode = "normal";
   let answerDelayTimer = null;
   let autoNextTimer = null;
 
@@ -1102,7 +1405,7 @@
     }
   }
 
-    function clearAnswerDelayTimer() {
+  function clearAnswerDelayTimer() {
     if (answerDelayTimer) {
       clearTimeout(answerDelayTimer);
       answerDelayTimer = null;
@@ -1138,7 +1441,7 @@
     correctCount = 0;
     answeredCount = 0;
     answered = false;
-    autoPlayEnabled = document.getElementById("autoPlayToggle").checked;
+    quizMode = document.querySelector('input[name="quizMode"]:checked').value;
     clearQuestionTimers();
 
     const selectedLines = Array.from(
@@ -1191,7 +1494,7 @@
     document.getElementById("answerButtons").classList.add("hidden");
     document.getElementById("answer").classList.add("hidden");
     document.getElementById("answer").innerHTML = "";
-    document.getElementById("showAnswerBtn").classList.remove("hidden");
+    document.getElementById("showAnswerBtn").classList.toggle("hidden", quizMode === "auto");
 
     answered = false;
     
@@ -1219,6 +1522,7 @@
 
     document.getElementById("answer").classList.add("hidden");
     document.getElementById("nextBtn").classList.add("hidden");
+    document.getElementById("nextBtn").disabled = false;
     updatePlayButton();
     
     document.getElementById("progress").textContent =
@@ -1236,11 +1540,13 @@
 
     audio.onended = () => {
       updatePlayButton();
-      clearAnswerDelayTimer();
-      answerDelayTimer = setTimeout(() => {
-        answerDelayTimer = null;
-        showAnswer();
-      }, 500);
+      scheduleAutoAnswer(500);
+    };
+
+    audio.onloadedmetadata = () => {
+      if (quizMode === "auto" && Number.isFinite(audio.duration)) {
+        scheduleAutoAnswer(Math.max(audio.duration * 1000 + 500, 3000));
+      }
     };
 
     const endBtn = document.getElementById("endBtn");
@@ -1250,11 +1556,24 @@
     } else {
       document.getElementById("endBtn").classList.remove("hidden");
     }
-    audio.play();
+    audio.play().catch(() => {
+      updatePlayButton();
+      if (quizMode === "auto") {
+        scheduleAutoAnswer(3000);
+      }
+    });
     updatePlayButton();
+
+    if (quizMode === "auto") {
+      scheduleAutoAnswer(4000);
+    }
   }
 
 function nextQuestion() {
+  if (quizMode === "scoring" && !answered) {
+    return;
+  }
+
   clearQuestionTimers();
   audio.pause();
   audio.currentTime = 0;
@@ -1263,17 +1582,9 @@ function nextQuestion() {
   current++;
 
   if (current >= questions.length) {
-    const score = answeredCount === 0
-      ? 0
-      : Math.round((correctCount / answeredCount) * 100);
-
     document.getElementById("quiz").classList.add("hidden");
     document.getElementById("result").classList.remove("hidden");
-
-    document.getElementById("score").innerHTML =
-      `${answeredCount}問採点 / ${questions.length}問中<br>
-       ${correctCount}問正解<br>
-       得点：${score}点`;
+    showResult();
 
     return;
   }
@@ -1281,53 +1592,20 @@ function nextQuestion() {
   loadQuestion();
 }
 
-  function showAnswerNow() {
-    audio.pause();
-    updatePlayButton();
+  function scheduleAutoAnswer(delay) {
+    clearAnswerDelayTimer();
+    answerDelayTimer = setTimeout(() => {
+      answerDelayTimer = null;
+      showAnswer();
+    }, delay);
+  }
 
-    const q = questions[current];
-
-    const lineClass = lineColors[q.line] || "";
-    const bgClass = lineBackgrounds[q.line] || "";
-
-    document.body.classList.remove("setup-mode");
-    document.body.classList.add("quiz-mode");
-
-    document.body.classList.remove(
-      "ginza-bg",
-      "marunouchi-bg",
-      "hibiya-bg",
-      "tozai-bg",
-      "chiyoda-bg",
-      "yuurakucho-bg",
-      "hanzomon-bg",
-      "namboku-bg",
-      "fukutoshin-bg",
-      "yf-bg"
-    );
-
-    document.body.classList.add(bgClass);
-
-    document.getElementById("answer").innerHTML =
-    `<div class="answer-title">${q.title}</div>
-    <small class="${lineClass}">
-      ${formatStation(q.station, q.line)}
-    </small>`;
-
-    document.getElementById("answer").classList.remove("hidden");
-
-    document.getElementById("answerButtons").classList.remove("hidden");
-    document.getElementById("playBtn").classList.remove("hidden");
-    document.getElementById("nextBtn").classList.remove("hidden");
-
-    if (current === questions.length - 1) {
-      document.getElementById("endBtn").classList.add("hidden");
-    } else {
-      document.getElementById("endBtn").classList.remove("hidden");
-    }
-
-    document.getElementById("showAnswerBtn").classList.add("hidden");
-
+  function scheduleAutoNext() {
+    clearAutoNextTimer();
+    autoNextTimer = setTimeout(() => {
+      autoNextTimer = null;
+      nextQuestion();
+    }, 5000);
   }
 
   function showAnswer() {
@@ -1358,28 +1636,17 @@ function nextQuestion() {
     document.getElementById("nextBtn").classList.remove("hidden");
     document.getElementById("showAnswerBtn").classList.add("hidden");
 
-    document.getElementById("judgeButtons").classList.remove("hidden");
-    answered = false;
+    document.getElementById("judgeButtons").classList.toggle("hidden", quizMode !== "scoring");
+    document.getElementById("nextBtn").disabled = quizMode === "scoring" && !answered;
 
     if (current === questions.length - 1) {
-      document.getElementById("nextBtn").classList.add("hidden");
-      document.getElementById("endBtn").classList.remove("hidden");
+      document.getElementById("endBtn").classList.add("hidden");
     } else {
-      document.getElementById("nextBtn").classList.remove("hidden");
       document.getElementById("endBtn").classList.remove("hidden");
     }
 
-    if (autoPlayEnabled) {
-      clearAutoNextTimer();
-      autoNextTimer = setTimeout(() => {
-        autoNextTimer = null;
-
-        if (current === questions.length - 1) {
-          endGame();
-        } else {
-          nextQuestion();
-        }
-      }, 3000);
+    if (quizMode === "auto") {
+      scheduleAutoNext();
     }
   }
 
@@ -1405,6 +1672,7 @@ function nextQuestion() {
     }
     correctBtn.disabled = true;
     wrongBtn.disabled = true;
+    document.getElementById("nextBtn").disabled = false;
   }
 
   function endGame() {
@@ -1413,14 +1681,27 @@ function nextQuestion() {
   audio.currentTime = 0;
   updatePlayButton();
   
-  const score = answeredCount === 0
-  ? 0
-  : Math.round((correctCount / answeredCount) * 100);
-
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("result").classList.remove("hidden");
+  showResult();
+  }
 
-  document.getElementById("score").innerHTML =
+  function showResult() {
+    const scoreElement = document.getElementById("score");
+
+    if (quizMode !== "scoring") {
+      scoreElement.classList.add("plain-result");
+      scoreElement.innerHTML = "";
+      return;
+    }
+
+    scoreElement.classList.remove("plain-result");
+
+    const score = answeredCount === 0
+      ? 0
+      : Math.round((correctCount / answeredCount) * 100);
+
+    scoreElement.innerHTML =
     `
     <div class="score-detail">
         ${questions.length}問中${answeredCount}問採点 ${correctCount}問正解
